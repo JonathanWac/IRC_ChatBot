@@ -46,8 +46,8 @@ public class MyPircBotCommands extends ListenerAdapter {
                 "Mississippi", "MS", "Wisconsin", "WI",
                 "Missouri", "MO", "Wyoming", "WY"};
 
-        for (int i = 0; i < US_States_Array.length; i++){
-            if (US_States_Array[i].toLowerCase().equals(string.toLowerCase())){
+        for (String s : US_States_Array) {
+            if (s.toLowerCase().equals(string.toLowerCase())) {
                 return true;
             }
         }
@@ -61,19 +61,19 @@ public class MyPircBotCommands extends ListenerAdapter {
     public void onMessage(MessageEvent event){
         /*System.out.printf("\n!!!!%s!!!!\n", event.getChannelSource());
         System.out.printf("\n!!!!%s!!!!\n", event.getMessage());*/
+        String msg = event.getMessage().trim();
 
-        if (event.getMessage().startsWith("!Help") || event.getMessage().startsWith("!Commands")){
+        if (msg.startsWith("!Help") || msg.startsWith("!Commands")){
             event.respond("List of commands:");
             event.respond("\t!Weather 'zipcode' (US only) \t!Weather 'city' (worldwide) \t!Weather 'US_City' 'US_State' (US only) \t!Weather city 3-Char_countrycode");
         }
-        else if (event.getMessage().startsWith("!Wiki")){
+        else if (msg.startsWith("!Wiki")){
             event.respond("No command yet for wiki");
         }
-        else if (event.getMessage().startsWith("!Weather")){
-            String msg = event.getMessage();
-                msg = msg.trim();
-                msg = msg.replace(',', ' ');
-            String[] args = msg.split(" +");
+        else if (msg.startsWith("!Weather")){
+            String weatherMsg = msg;
+            weatherMsg = weatherMsg.replace(',', ' ');
+            String[] args = weatherMsg.split(" +");
 
             int zipCodeIndex = -99;
 
@@ -121,8 +121,8 @@ public class MyPircBotCommands extends ListenerAdapter {
         else {
             Vector<String> stringData = weatherData.dataDescription();
 
-            for (int i = 0; i < stringData.size(); i++){
-                event.respondWith(stringData.get(i));
+            for (String stringDatum : stringData) {
+                event.respondWith(stringDatum);
             }
         }
     }
