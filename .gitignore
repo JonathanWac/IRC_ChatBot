@@ -1,7 +1,9 @@
 # Project exclude paths
 /target/
-/.idea/
+/src/main/java/TOKENS.java
 # Project include
-!/.idea/libraries
 
-
+/*
+    !/.idea
+    /.idea/*
+    !/.idea/libraries
