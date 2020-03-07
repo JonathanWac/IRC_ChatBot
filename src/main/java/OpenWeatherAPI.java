@@ -30,8 +30,8 @@ public class OpenWeatherAPI{
 
     private static WeatherData parseOpenWeatherAPI(JSONObject jsonObj){
 
-        JSONObject jsonObj2 = null;
-        JSONArray jsonArray = null;
+        JSONObject jsonObj2;
+        JSONArray jsonArray;
         WeatherData weatherData = new WeatherData();
 
         if (jsonObj == null){
@@ -96,27 +96,27 @@ public class OpenWeatherAPI{
         return parseOpenWeatherAPI(CallAPIRequest.toJSONobj(urlString));
     }
     public static WeatherData callCityAPI(String cityName) {
-        urlString = String.format("http://api.openweathermap.org/data/2.5/weather?q=%s&units=imperial&appid=%s", cityName ,TOKENS.getOpenWeatherKEY());
+        urlString = String.format("http://api.openweathermap.org/data/2.5/weather?q=%s&units=imperial&appid=%s", cityName ,TOKENS.getOpenWeatherAPIKEY());
         return callAPI();
     }
     public static WeatherData callCityStateCountryAPI(String cityName, String state, String country) {
         /*api.openweathermap.org/data/2.5/weather?q={city name},{state},{country code}&appid={your api key}*/
-        urlString = String.format("http://api.openweathermap.org/data/2.5/weather?q=%s,%s,%s&units=imperial&appid=%s", cityName, state, country ,TOKENS.getOpenWeatherKEY());
+        urlString = String.format("http://api.openweathermap.org/data/2.5/weather?q=%s,%s,%s&units=imperial&appid=%s", cityName, state, country ,TOKENS.getOpenWeatherAPIKEY());
         return callAPI();
     }
     public static WeatherData callCityCountryAPI(String cityName, String countryCode) {
         /*ex. api.openweathermap.org/data/2.5/weather?q=London,uk*/
-        urlString = String.format("http://api.openweathermap.org/data/2.5/weather?q=%s,%s&units=imperial&appid=%s", cityName, countryCode ,TOKENS.getOpenWeatherKEY());
+        urlString = String.format("http://api.openweathermap.org/data/2.5/weather?q=%s,%s&units=imperial&appid=%s", cityName, countryCode ,TOKENS.getOpenWeatherAPIKEY());
         return callAPI();
     }
     public static WeatherData callZipcodeAPI(String zipCode){ //Defaults to US states
         /*api.openweathermap.org/data/2.5/weather?zip={zip code},{country code}&appid={your api key}*/
-        urlString = String.format("http://api.openweathermap.org/data/2.5/weather?zip=%s&units=imperial&appid=%s", zipCode,TOKENS.getOpenWeatherKEY());
+        urlString = String.format("http://api.openweathermap.org/data/2.5/weather?zip=%s&units=imperial&appid=%s", zipCode,TOKENS.getOpenWeatherAPIKEY());
         return callAPI();
 
     }
     public static WeatherData callZipcodeCountryAPI(String zipCode, String countryCode){
-        urlString = String.format("http://api.openweathermap.org/data/2.5/weather?zip=%s,%s&units=imperial&appid=%s", zipCode, countryCode,TOKENS.getOpenWeatherKEY());
+        urlString = String.format("http://api.openweathermap.org/data/2.5/weather?zip=%s,%s&units=imperial&appid=%s", zipCode, countryCode,TOKENS.getOpenWeatherAPIKEY());
         return callAPI();
 
     }
