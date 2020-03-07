@@ -65,7 +65,28 @@ public class MyPircBotCommands extends ListenerAdapter {
 
         if (msg.startsWith("!Help") || msg.startsWith("!Commands")){
             event.respond("List of commands:");
-            event.respond("\t!Weather 'zipcode' (US only) \t!Weather 'city' (worldwide) \t!Weather 'US_City' 'US_State' (US only) \t!Weather city 3-Char_countrycode");
+            event.respond("!Weather 'zipcode' (US only) - !Weather 'city' (worldwide) - !Weather 'US_City' 'US_State' (US only) - !Weather city 3-Char_countrycode");
+        }
+        else if (msg.startsWith("!ADMIN")){
+            String adminMsg = msg;
+            adminMsg = adminMsg.replace(',', ' ');
+            String[] args = adminMsg.split(" +");
+            if (args[1].toLowerCase().equals("changech") && args.length >= 3){
+                String channelName2 = args[2];
+                event.respondWith("/join "+channelName2);
+                event.getBot().send().joinChannel(channelName2);
+                event.respondChannel("Test response");
+                //Not yet implemented
+                // Thought is to throw an exception back to main with the channel name, which would then reconnect the bot to a new channel
+            }
+            else if(args[1].toLowerCase().equals("exitch")){
+                event.respondWith("Quitting because of command" +msg);
+                event.getBot().send().quitServer();
+            }
+
+
+
+
         }
         else if (msg.startsWith("!Wiki")){
             event.respond("No command yet for wiki");
@@ -98,7 +119,9 @@ public class MyPircBotCommands extends ListenerAdapter {
                     printWeatherData(event, weatherData);
                 }
                 else if (isUS_State(args[2])){      //Call for a City with a US State
-                    WeatherData weatherData = OpenWeatherAPI.callCityStateCountryAPI(args[1], args[2], "US");
+                    String state = args[2];
+                    state = state.replace(" ", "");
+                    WeatherData weatherData = OpenWeatherAPI.callCityStateCountryAPI(args[1], state, "USA");
                     printWeatherData(event, weatherData);
                 }
                 else {                              //Call for a city with a Country code

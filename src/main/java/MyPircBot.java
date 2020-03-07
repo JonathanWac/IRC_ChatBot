@@ -15,7 +15,6 @@ public class MyPircBot {
                 .addServer("irc.freenode.net")
                 .addListener(new MyPircBotCommands())
                 .buildConfiguration(); //Create an immutable configuration from this builder
-
         PircBotX myBot = new PircBotX(config);
         try{
             myBot.startBot();
