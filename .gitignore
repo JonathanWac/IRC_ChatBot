@@ -2,6 +2,6 @@
 /target/
 /.idea/
 # Project include
-/.idea/!libraries
+!/.idea/libraries
 
 
