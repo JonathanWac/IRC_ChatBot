@@ -1,0 +1,7 @@
+# Project exclude paths
+/target/
+/.idea/
+# Project include
+/.idea/!libraries
+!pom.xml
+
