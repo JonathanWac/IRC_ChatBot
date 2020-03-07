@@ -3,7 +3,5 @@
 /src/main/java/TOKENS.java
 # Project include
 
-/*
-    !/.idea
-    /.idea/*
+/.idea
     !/.idea/libraries
