@@ -123,8 +123,17 @@ public class MyPircBotCommands extends ListenerAdapter {
 
         }
         else if (msg.startsWith("!Weather")){
+            String weatherMsg = msg;
+            weatherMsg = weatherMsg.replace("!Weather", "");
+            if (weatherMsg.startsWith(" ")){
+                weatherMsg = weatherMsg.replaceFirst(" +", "");
+            }
 
+            Vector<Float> myLatLongCoords = MapQuestAPI.call_LatLongAPI(weatherMsg);
+            WeatherData weatherData = OpenWeatherAPI.callLatLongAPI(myLatLongCoords.get(0), myLatLongCoords.get(1));
+            weatherData.origSearchString = weatherMsg;
 
+            printWeatherData(event, weatherData);
             /*String weatherMsg = msg;
             weatherMsg = weatherMsg.replace(',', ' ');
             String[] args = weatherMsg.split(" +");
@@ -176,7 +185,7 @@ public class MyPircBotCommands extends ListenerAdapter {
         }
         else {
             Vector<String> stringData = weatherData.dataDescription();
-
+            event.respondWith("Weather for: "+weatherData.origSearchString);
             for (String stringDatum : stringData) {
                 event.respondWith(stringDatum);
             }

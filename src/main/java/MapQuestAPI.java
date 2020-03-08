@@ -1,6 +1,7 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.Objects;
 import java.util.Vector;
 
 //https://www.mapquestapi.com/geocoding/v1/address?key={KEY}&inFormat=kvp&outFormat=json&location={Denver%2C+CO}&thumbMaps=true&maxResults=1
@@ -21,6 +22,9 @@ public class MapQuestAPI {
             jsonArray = jsonObj.getJSONArray("results");
             jsonObj2 = jsonArray.getJSONObject(0);
 
+            jsonArray = jsonObj2.getJSONArray("locations");
+            jsonObj2 = jsonArray.getJSONObject(0);
+
             mapURL = jsonObj2.getString("mapUrl");
             jsonObj2 = jsonObj2.getJSONObject("latLng");
 
@@ -34,9 +38,9 @@ public class MapQuestAPI {
         return latAndLongData;
     }
     private static Vector<Float> call_LatLongAPI(){
-        return parseLatLong(CallAPIRequest.toJSONobj(urlString));
+        return parseLatLong(Objects.requireNonNull(CallAPIRequest.toJSONobj(urlString)));
     }
-    private static Vector<Float> call_LatLongAPI(String searchString){
+    public static Vector<Float> call_LatLongAPI(String searchString){
         //searchString = searchString.trim().replace(",", "%2C");
         searchString = searchString.replaceAll(" +", "+");
 

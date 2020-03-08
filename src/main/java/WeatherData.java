@@ -3,7 +3,7 @@ import com.google.common.base.MoreObjects;
 import java.util.Vector;
 
 public class WeatherData {
-    public String weatherCategory, weatherDesc, locationName, iconID, countryName;
+    public String weatherCategory, weatherDesc, locationName, iconID, countryName, origSearchString;
     public int locationID, visibility, humidity, pressure, weatherID, percentClouds;
     public float rainMM1h, rainMM3h, snowMM1h, snowMM3h, avgTemp, tempFeels, temp_min, temp_max;
 
@@ -17,7 +17,7 @@ public class WeatherData {
         Vector<String> myData = new Vector<>();
         String formatStr;
 
-        formatStr = String.format("Weather for: %s, %s", locationName, countryName);
+        formatStr = String.format("\tData from: %s, %s", locationName, countryName);
         myData.add(formatStr);
 
         formatStr = String.format("\tAvg Temp %.2f\u2109", avgTemp);
@@ -34,7 +34,7 @@ public class WeatherData {
             formatStr = String.format("\t\tHourly Rain %.2fmm", rainMM1h);
             myData.add(formatStr);
         }
-        else if (weatherCategory == "Snow"){
+        else if (weatherCategory.equals("Snow")){
             formatStr = String.format("\t\tHourly Snow %.2fmm", snowMM1h);
             myData.add(formatStr);
         }
