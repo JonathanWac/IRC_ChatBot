@@ -89,7 +89,6 @@ public class MyPircBotCommands extends ListenerAdapter {
 
         }
         else if (msg.startsWith("!Wiki")){
-            event.respond("No command yet for wiki");
             String wikiMsg = msg;
             wikiMsg = wikiMsg.replace(',', ' ');
             String[] args = wikiMsg.split(" +");
@@ -134,6 +133,8 @@ public class MyPircBotCommands extends ListenerAdapter {
             weatherData.origSearchString = weatherMsg;
 
             printWeatherData(event, weatherData);
+
+            ////////////////////////////////////////////////////////////////////////////
             /*String weatherMsg = msg;
             weatherMsg = weatherMsg.replace(',', ' ');
             String[] args = weatherMsg.split(" +");
@@ -175,6 +176,7 @@ public class MyPircBotCommands extends ListenerAdapter {
             else{
                 event.respond("!Weather command not recognized...");
             }*/
+            ////////////////////////////////////////////////////////////////////////////////////////////
         }
 
     }
