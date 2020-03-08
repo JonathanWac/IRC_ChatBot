@@ -90,9 +90,42 @@ public class MyPircBotCommands extends ListenerAdapter {
         }
         else if (msg.startsWith("!Wiki")){
             event.respond("No command yet for wiki");
+            String wikiMsg = msg;
+            wikiMsg = wikiMsg.replace(',', ' ');
+            String[] args = wikiMsg.split(" +");
+            if (args[1].toLowerCase().equals("search")){
+                StringBuilder searchStringBuilder;
+                if (args.length >= 4){
+                    searchStringBuilder = new StringBuilder(args[2]);
+                    for (int i = 3; i < args.length; i++){
+                        searchStringBuilder.append(args[i]);
+                    }
+                    WikiPageInfo[] results = MediaWikiAPI.callAPI(searchStringBuilder.toString()).toArray(new WikiPageInfo[0]);
+                    for (int i = 0; i < results.length; i++){
+                        event.respondWith(String.format("Result %d: %s\tURL: %s", i+1, results[i].getTitle(), results[i].getUrl()));
+                    }
+                }
+                else if (args.length == 3){
+
+                    WikiPageInfo[] results = MediaWikiAPI.callAPI(args[2]).toArray(new WikiPageInfo[0]);
+
+                    for (int i = 0; i < results.length; i++){
+                        event.respondWith(String.format("Result %d: %s\tURL: %s", i+1, results[i].getTitle(), results[i].getUrl()));
+                    }
+                }
+
+
+
+
+            }
+
+
+
         }
         else if (msg.startsWith("!Weather")){
-            String weatherMsg = msg;
+
+
+            /*String weatherMsg = msg;
             weatherMsg = weatherMsg.replace(',', ' ');
             String[] args = weatherMsg.split(" +");
 
@@ -132,7 +165,7 @@ public class MyPircBotCommands extends ListenerAdapter {
             }
             else{
                 event.respond("!Weather command not recognized...");
-            }
+            }*/
         }
 
     }

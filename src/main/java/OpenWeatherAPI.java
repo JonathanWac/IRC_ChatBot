@@ -6,6 +6,7 @@
 api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
 api.openweathermap.org/data/2.5/weather?q={city name},{state}&appid={your api key}
 api.openweathermap.org/data/2.5/weather?q={city name},{state},{country code}&appid={your api key}
+api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={your api key}
 
 How to get icon URL
 For code 501 - moderate rain icon = "10d"
@@ -94,6 +95,11 @@ public class OpenWeatherAPI{
 
     private static WeatherData callAPI(){
         return parseOpenWeatherAPI(CallAPIRequest.toJSONobj(urlString));
+    }
+    public static WeatherData callLatLongAPI(float latitude, float longitude){
+        urlString = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f&units=imperial&appid=%s",
+                    latitude, longitude, TOKENS.getOpenWeatherAPIKEY());
+        return callAPI();
     }
     public static WeatherData callCityAPI(String cityName) {
         urlString = String.format("http://api.openweathermap.org/data/2.5/weather?q=%s&units=imperial&appid=%s", cityName ,TOKENS.getOpenWeatherAPIKEY());

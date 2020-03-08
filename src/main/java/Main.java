@@ -7,7 +7,6 @@ public class Main {
         /*WeatherData myData = OpenWeatherAPI.callCityAPI("Sydney");
         Vector<String> myVect = myData.dataDescription();
         System.out.println(" ");*/
-
        /* MediaWikiAPI.callAPI("Dallas");*/
 
         MyPircBot myBot = new MyPircBot();
