@@ -16,7 +16,7 @@ public class MapQuestAPI {
         JSONObject jsonObj2;
         JSONArray jsonArray;
 
-        String mapURL;
+
 
         if (jsonObj.has("results")){
             jsonArray = jsonObj.getJSONArray("results");
@@ -25,7 +25,7 @@ public class MapQuestAPI {
             jsonArray = jsonObj2.getJSONArray("locations");
             jsonObj2 = jsonArray.getJSONObject(0);
 
-            mapURL = jsonObj2.getString("mapUrl");
+            //String mapURL = jsonObj2.getString("mapUrl");
             jsonObj2 = jsonObj2.getJSONObject("latLng");
 
             latAndLongData.add(jsonObj2.getFloat("lat"));

@@ -44,10 +44,7 @@ public class WeatherData {
             formatStr = String.format("\tDescription: %s\tCloud coverage %d%%", weatherDesc, percentClouds);
             myData.add(formatStr);
         }
-
-
         return myData;
-
     }
 
     public String displayWeather(){

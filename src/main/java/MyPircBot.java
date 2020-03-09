@@ -45,7 +45,21 @@ public class MyPircBot {
                 .buildConfiguration(); //Create an immutable configuration from this builder
 
         PircBotX myBot = new PircBotX(config);
-
+        try{
+            myBot.startBot();
+        }
+        catch (IOException e){
+            System.err.println("An unexpected IOException has occured... Now disconnecting the bot");
+            e.printStackTrace();
+            myBot.stopBotReconnect();
+            myBot.sendIRC().quitServer("An unexpected IOException has occured... Now disconnecting the bot");
+        }
+        catch (IrcException e){
+            System.err.println("An unexpected IrcException has occured... Now disconnecting the bot");
+            e.printStackTrace();
+            myBot.stopBotReconnect();
+            myBot.sendIRC().quitServer("An unexpected IrcException has occured... Now disconnecting the bot");
+        }
 
 
 
