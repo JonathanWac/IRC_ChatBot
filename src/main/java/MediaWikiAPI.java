@@ -13,7 +13,10 @@
 //Oh, and you can also get the full page URL in your initial API call if you add "&prop=info&inprop=url":
 //http://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=meaning&srprop=size%7Cwordcount%7Ctimestamp%7Csnippet&prop=info&inprop=url
 
-
+//GETS FULL PAGE INFO/SUMMARY already parsed
+// :https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&pageids=909036&redirects=1&exsentences=6&exlimit=1&exintro=1&explaintext=1&exsectionformat=plain
+// :https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&titles=Elon_Musk&redirects=1&exsentences=6&exlimit=1&exintro=1&explaintext=1&exsectionformat=plain
+import java.util.Objects;
 import java.util.Vector;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,25 +34,52 @@ public class MediaWikiAPI {
         int pageID;
 
         jsonObj2 = jsonObj1.getJSONObject("query");
+        if (0 == jsonObj2.getJSONObject("searchinfo").getInt("totalhits")){
+            WikiPageInfo wikiPageInfo = new WikiPageInfo();
+            wikiPageInfo.setTitle("N/a");
+            wikiPageInfo.setPageID(0);
+            wikiPageInfo.setSummary("No results found");
+            wikiPageInfo.setUrl("N/a");
+
+            wikiPages.add(wikiPageInfo);
+            return wikiPages;
+        }
         if (jsonObj2.has("search")){
             jsonArray = jsonObj2.getJSONArray("search");
             for (int i = 0; i < jsonArray.length(); i++){
                 jsonObj2 = jsonArray.getJSONObject(i);
                 pageTitle = jsonObj2.getString("title");
                 pageID = jsonObj2.getInt("pageid");
+                WikiPageInfo myPage = MediaWikiAPI.callPageSummaryAPI(pageID, 5);
                 wikiPages.add(new WikiPageInfo(pageTitle, pageID));
+                wikiPages.get(i).setSummary(myPage.summary);
                 /*wikiPages.add(new WikiPageInfo(jsonArray.getJSONObject(i).getString("title"), jsonArray.getJSONObject(i).getInt("pageid")));*/
             }
         }
 
         return wikiPages;
     }
-
-    private static Vector<WikiPageInfo> callAPI(){
-        return parseMediaWikiSearch(CallAPIRequest.toJSONobj(urlString));
+    public static WikiPageInfo callPageSummaryAPI(int pageID, int numSentences) {
+        urlString = String.format("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&pageids=%d&redirects=1&exsentences=%d&exlimit=1&exintro=1&explaintext=1&exsectionformat=plain", pageID, numSentences); // http:// has to be at the front of the url
+        return parseWikiPageSummary(Objects.requireNonNull(CallAPIRequest.toJSONobj(urlString)), pageID);
     }
-    public static Vector<WikiPageInfo> callAPI(String searchString) {
-        urlString = String.format("https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%s", searchString); // http:// has to be at the front of the url
-        return callAPI();
+    private static WikiPageInfo parseWikiPageSummary(JSONObject jsonObj, int pageID) {
+        WikiPageInfo pageInfo = new WikiPageInfo();
+
+        try{
+            pageInfo.setSummary(jsonObj.getJSONObject("query").getJSONObject("pages").getJSONObject(Integer.toString(pageID)).getString("extract"));
+        }catch (Exception e){
+            pageInfo.setSummary("Could not retrieve page summary...");
+        }
+
+        return pageInfo;
+    }
+
+    private static Vector<WikiPageInfo> callSearchAPI(){
+        return parseMediaWikiSearch(Objects.requireNonNull(CallAPIRequest.toJSONobj(urlString)));
+    }
+    public static Vector<WikiPageInfo> callSearchAPI(String searchString, int searchLimit) {
+        urlString = String.format("https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%s&srlimit=%d", searchString, searchLimit); // http:// has to be at the front of the url
+        return callSearchAPI();
     }
 }

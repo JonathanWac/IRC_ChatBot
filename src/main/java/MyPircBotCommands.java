@@ -65,7 +65,9 @@ public class MyPircBotCommands extends ListenerAdapter {
 
         if (msg.startsWith("!Help") || msg.startsWith("!Commands")){
             event.respond("List of commands:");
-            event.respond("!Weather 'zipcode' (US only) - !Weather 'city' (worldwide) - !Weather 'US_City' 'US_State' (US only) - !Weather city 3-Char_countrycode");
+            event.respond("\t!Weather \"Search String\" ");
+            event.respond("\t!Wiki search \"Search String\"");
+            event.respond("\t!Help or !Commands");
         }
         else if (msg.startsWith("!ADMIN")){
             String adminMsg = msg;
@@ -97,19 +99,21 @@ public class MyPircBotCommands extends ListenerAdapter {
                 if (args.length >= 4){
                     searchStringBuilder = new StringBuilder(args[2]);
                     for (int i = 3; i < args.length; i++){
-                        searchStringBuilder.append(args[i]);
+                        searchStringBuilder.append("+"+args[i]);
                     }
-                    WikiPageInfo[] results = MediaWikiAPI.callAPI(searchStringBuilder.toString()).toArray(new WikiPageInfo[0]);
+                    WikiPageInfo[] results = MediaWikiAPI.callSearchAPI(searchStringBuilder.toString(), 1).toArray(new WikiPageInfo[0]);
                     for (int i = 0; i < results.length; i++){
                         event.respondWith(String.format("Result %d: %s\tURL: %s", i+1, results[i].getTitle(), results[i].getUrl()));
+                        event.respondWith("\t"+results[i].getSummary());
                     }
                 }
                 else if (args.length == 3){
 
-                    WikiPageInfo[] results = MediaWikiAPI.callAPI(args[2]).toArray(new WikiPageInfo[0]);
+                    WikiPageInfo[] results = MediaWikiAPI.callSearchAPI(args[2], 1).toArray(new WikiPageInfo[0]);
 
                     for (int i = 0; i < results.length; i++){
                         event.respondWith(String.format("Result %d: %s\tURL: %s", i+1, results[i].getTitle(), results[i].getUrl()));
+                        event.respondWith("\t"+results[i].getSummary());
                     }
                 }
 
@@ -186,9 +190,11 @@ public class MyPircBotCommands extends ListenerAdapter {
             event.respondWith("Open weather could not find the location you entered... (bad request error)");
         }
         else {
+
             Vector<String> stringData = weatherData.dataDescription();
             event.respondWith("Weather for: "+weatherData.origSearchString);
-            for (String stringDatum : stringData) {
+            for (int i = 0; i < stringData.size(); i++) {
+                String stringDatum = stringData.get(i);
                 event.respondWith(stringDatum);
             }
         }

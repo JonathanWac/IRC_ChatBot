@@ -1,6 +1,6 @@
 public class WikiPageInfo {
-    String title, url;
-    int pageID;
+    public String title, url, summary;
+    public int pageID;
 
     public WikiPageInfo(){
 
@@ -16,6 +16,14 @@ public class WikiPageInfo {
         this.title = title;
         this.url = url;
         this.pageID = pageID;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public String getTitle() { return title; }

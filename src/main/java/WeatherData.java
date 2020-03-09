@@ -20,7 +20,9 @@ public class WeatherData {
         formatStr = String.format("\tData from: %s, %s", locationName, countryName);
         myData.add(formatStr);
 
-        formatStr = String.format("\tAvg Temp %.2f\u2109", avgTemp);
+        formatStr = String.format("\tTemp - Avg %.2f\u2109, High %.2f\u2109, Low %.2f\u2109, Feels Like %.2f\u2109,", avgTemp, temp_max, temp_min, tempFeels);
+        myData.add(formatStr);
+        /*formatStr = String.format("\tAvg Temp %.2f\u2109", avgTemp);
         myData.add(formatStr);
         formatStr = String.format("\tTemp Max %.2f\u2109", temp_max);
         myData.add(formatStr);
@@ -29,17 +31,19 @@ public class WeatherData {
         formatStr = String.format("\tFeels like %.2f\u2109", temp_min);
         myData.add(formatStr);
         formatStr = String.format("\t\tDescription: %s", weatherDesc);
-        myData.add(formatStr);
+        myData.add(formatStr);*/
+
         if (weatherCategory.equals("Rain") || weatherCategory.equals("Drizzle") || weatherCategory.equals("Thunderstorm")){
-            formatStr = String.format("\t\tHourly Rain %.2fmm", rainMM1h);
+            formatStr = String.format("\tDescription: %s\tHourly Rain %.2fmm\tCloud coverage %d%%", weatherDesc, rainMM1h, percentClouds);
             myData.add(formatStr);
         }
         else if (weatherCategory.equals("Snow")){
-            formatStr = String.format("\t\tHourly Snow %.2fmm", snowMM1h);
+            formatStr = String.format("\tDescription: %s\tHourly Snow %.2fmm\tCloud coverage %d%%", weatherDesc, snowMM1h, percentClouds);
+            myData.add(formatStr);
+        }else {
+            formatStr = String.format("\tDescription: %s\tCloud coverage %d%%", weatherDesc, percentClouds);
             myData.add(formatStr);
         }
-        formatStr = String.format("\t\tCloud coverage %d%%", percentClouds);
-        myData.add(formatStr);
 
 
         return myData;
