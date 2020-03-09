@@ -5,5 +5,4 @@ WeatherBot.iml
 /main/test
 # Project include
 
-/.idea
-    !/.idea/libraries
+.idea\
