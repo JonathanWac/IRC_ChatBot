@@ -42,6 +42,7 @@ public class MyPircBot {
                 .setAutoNickChange(true) //Automatically change nick when the current one is in use
                 .addAutoJoinChannel(channel)//Join #pircbotx channel on connect
                 .addServer(serverName)
+                .setAutoReconnect(true)
                 .buildConfiguration(); //Create an immutable configuration from this builder
 
         PircBotX myBot = new PircBotX(config);
