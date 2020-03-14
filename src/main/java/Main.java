@@ -10,6 +10,7 @@ public class Main {
         /*MediaWikiAPI.callSearchAPI("Dallas", 5);
         System.out.println("Test");*/
         MyPircBot myBot = new MyPircBot();
+        System.out.println("My newest push");
 
     }
 }
