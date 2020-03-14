@@ -7,10 +7,9 @@ public class Main {
         /*WeatherData myData = OpenWeatherAPI.callCityAPI("Sydney");
         Vector<String> myVect = myData.dataDescription();
         System.out.println(" ");*/
-       /* MediaWikiAPI.callAPI("Dallas");*/
-
+        /*MediaWikiAPI.callSearchAPI("Dallas", 5);
+        System.out.println("Test");*/
         MyPircBot myBot = new MyPircBot();
-
 
     }
 }

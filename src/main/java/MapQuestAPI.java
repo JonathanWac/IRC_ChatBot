@@ -16,8 +16,6 @@ public class MapQuestAPI {
         JSONObject jsonObj2;
         JSONArray jsonArray;
 
-
-
         if (jsonObj.has("results")){
             jsonArray = jsonObj.getJSONArray("results");
             jsonObj2 = jsonArray.getJSONObject(0);
