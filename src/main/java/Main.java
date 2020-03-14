@@ -11,6 +11,7 @@ public class Main {
         System.out.println("Test");*/
         MyPircBot myBot = new MyPircBot();
         System.out.println("My newest push");
+        System.out.println("Newer Push Test");
 
     }
 }
