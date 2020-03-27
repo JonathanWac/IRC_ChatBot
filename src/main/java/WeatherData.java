@@ -36,7 +36,7 @@ public class WeatherData {
 
         formatStr = String.format("\tData from: %s, %s", locationName, countryName);
         myData.add(formatStr);
-        formatStr = String.format("\tTemp - Avg %.2f\u2109, High %.2f\u2109, Low %.2f\u2109, Feels Like %.2f\u2109,", avgTemp, temp_max, temp_min, tempFeels);
+        formatStr = String.format("\tTemp: Avg %.2f\u2109   High %.2f\u2109   Low %.2f\u2109   Feels Like %.2f\u2109", avgTemp, temp_max, temp_min, tempFeels);
         myData.add(formatStr);
 
         if (weatherCategory.equals("Rain") || weatherCategory.equals("Drizzle") || weatherCategory.equals("Thunderstorm")){

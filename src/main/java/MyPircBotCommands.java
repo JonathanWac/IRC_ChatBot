@@ -21,6 +21,7 @@
 //====================================================================================================================================================================
 
 
+import org.pircbotx.Colors;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.ConnectEvent;
 import org.pircbotx.hooks.events.DisconnectEvent;
@@ -190,13 +191,13 @@ public class MyPircBotCommands extends ListenerAdapter {
 
     private static void printWeatherData(MessageEvent event, WeatherData weatherData) {
         if (weatherData.weatherID < 0){
-            event.respondWith("Open weather could not find the location you entered... (bad request error)");
+            event.respondWith(Colors.ITALICS+Colors.RED+"Open weather could not find the location you entered... (bad request error)");
         }
         else {
             Vector<String> stringData = weatherData.dataDescription();
-            event.respondWith("Weather for: "+weatherData.origSearchString);
+            event.respondWith(Colors.BOLD+Colors.UNDERLINE+Colors.DARK_BLUE+"Weather for: "+weatherData.origSearchString);
             for (String stringDatum : stringData) {
-                event.respondWith(stringDatum);
+                event.respondWith(Colors.BLUE+Colors.BOLD+stringDatum);
             }
         }
     }
