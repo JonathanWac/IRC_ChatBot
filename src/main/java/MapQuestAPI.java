@@ -1,6 +1,18 @@
+//============================================================================
+// Name        : MapQuestAPI.java
+// Author      : Jonathan Wachholz (JHW190002)
+// Course	   : UTDallas CS 2336.501 Spring
+// Version     : 1.0
+// Copyright   : March. 2020
+// Description :
+//   Static class that calls the MapQuest.com API in order to parse the Longitude and Latitude data from a given search term
+//          !Important to note, an invalid search term will always return the longitude / latitude data for Stockton Ohio
+//              Primarily uses the call_LatLongAPI(String searchString) method to call the MapQuest API with the given search string
+//                  And returns a vector with the Lat/Long data contained inside
+//============================================================================
+
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.Objects;
 import java.util.Vector;
 

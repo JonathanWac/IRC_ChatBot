@@ -1,27 +1,39 @@
-
-
-
+//============================================================================
+// Name        : OpenWeatherAPI.java
+// Author      : Jonathan Wachholz (JHW190002)
+// Course	   : UTDallas CS 2336.501 Spring
+// Version     : 1.0
+// Copyright   : March. 2020
+// Description :
+//   Static class that calls the OpenWeather API
+//          Currently, the only method used by the bot is the callLatLongAPI(float latitude, float longitude) method...
+//              Since the MapQuest API is able to more accurately parse a search term, they are both used in conjunction,
+//              where the MapQuest API will return Lat / Long data to then be used to more accurately call the
+//              OpenWeather API with that given Latitude / Longitude data
+//
+//============================================================================
+//      The following information is just documentation on how the OpenWeather API works and ways to make the api calls
+//============================================================================
 //https://openweathermap.org/current
-/*
-api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
-api.openweathermap.org/data/2.5/weather?q={city name},{state}&appid={your api key}
-api.openweathermap.org/data/2.5/weather?q={city name},{state},{country code}&appid={your api key}
-api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={your api key}
-
-How to get icon URL
-For code 501 - moderate rain icon = "10d"
-URL is
-http://openweathermap.org/img/wn/10d@2x.png
-
-*/
-/*By ZIP code
-Description:
-Please note if country is not specified then the search works for USA as a default.
-
-API call:
-api.openweathermap.org/data/2.5/weather?zip={zip code},{country code}&appid={your api key}
-Examples of API calls:
-api.openweathermap.org/data/2.5/weather?zip=94040,us*/
+//api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
+//api.openweathermap.org/data/2.5/weather?q={city name},{state}&appid={your api key}
+//api.openweathermap.org/data/2.5/weather?q={city name},{state},{country code}&appid={your api key}
+//api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={your api key}
+//
+//How to get icon URL
+//For code 501 - moderate rain icon = "10d"
+//URL is
+//http://openweathermap.org/img/wn/10d@2x.png
+//
+//By ZIP code
+//Description:
+//Please note if country is not specified then the search works for USA as a default.
+//
+//API call:
+//api.openweathermap.org/data/2.5/weather?zip={zip code},{country code}&appid={your api key}
+//Examples of API calls:
+//api.openweathermap.org/data/2.5/weather?zip=94040,us
+//============================================================================
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,7 +42,6 @@ public class OpenWeatherAPI{
     private static String urlString;
 
     private static WeatherData parseOpenWeatherAPI(JSONObject jsonObj){
-
         JSONObject jsonObj2;
         JSONArray jsonArray;
         WeatherData weatherData = new WeatherData();
@@ -39,7 +50,6 @@ public class OpenWeatherAPI{
             weatherData.weatherID = -400;
             return weatherData;
         }
-
         if (jsonObj.has("cod"))
             if (jsonObj.getInt("cod") == 404){
                 weatherData.weatherID = -404;
@@ -52,7 +62,6 @@ public class OpenWeatherAPI{
                 weatherData.weatherCategory = jsonObj2.getString("main");
                 weatherData.weatherID = jsonObj2.getInt("id");
                 weatherData.iconID = jsonObj2.getString("icon");
-
         jsonObj2 = jsonObj.getJSONObject("main");
             weatherData.avgTemp = jsonObj2.getFloat("temp");
             weatherData.tempFeels = jsonObj2.getFloat("feels_like");
@@ -60,7 +69,6 @@ public class OpenWeatherAPI{
             weatherData.temp_max = jsonObj2.getFloat("temp_max");
             weatherData.humidity = jsonObj2.getInt("humidity");
             weatherData.pressure = jsonObj2.getInt("pressure");
-
         weatherData.visibility = jsonObj.getInt("visibility");
 
         if (jsonObj.has("rain")){
@@ -70,7 +78,6 @@ public class OpenWeatherAPI{
             if (jsonObj2.has("3h")){
                 weatherData.rainMM3h = jsonObj2.getFloat("3h"); }
         }
-
         if (jsonObj.has("snow")){
             jsonObj2 = jsonObj.getJSONObject("snow");
             if (jsonObj2.has("1h")){
@@ -86,7 +93,6 @@ public class OpenWeatherAPI{
 
         weatherData.locationName = jsonObj.getString("name");
         weatherData.locationID = jsonObj.getInt("id");
-
         jsonObj2 = jsonObj.getJSONObject("sys");
         weatherData.countryName = jsonObj2.getString("country");
 
@@ -106,7 +112,7 @@ public class OpenWeatherAPI{
         return callAPI();
     }
     public static WeatherData callCityStateCountryAPI(String cityName, String state, String country) {
-        /*api.openweathermap.org/data/2.5/weather?q={city name},{state},{country code}&appid={your api key}*/
+        /*api.openweathermap.org/data/2.5/weather?q={city name},{state code},{country code}&appid={your api key}*/
         urlString = String.format("http://api.openweathermap.org/data/2.5/weather?q=%s,%s,%s&units=imperial&appid=%s", cityName, state, country ,TOKENS.getOpenWeatherAPIKEY());
         return callAPI();
     }
