@@ -5,7 +5,14 @@
 // Version     : 1.0
 // Copyright   : March. 2020
 // Description :
+//
 //   Driver file to start / run the weather bot implemented in the rest of this project
+//====================================================================================================================================================================
+//   This program is dependent on the following external libraries imported through a Maven framework:
+//          org.apache.httpcomponents  - for the CloseableHttpClient and other classes used
+//          org.json                   - for the json parsing classes used
+//          org.pircbotx               - for the PircBotX class used as the base class for the bot
+//
 //====================================================================================================================================================================
 
 
@@ -13,14 +20,7 @@ public class WeatherBotMain {
 
     public static void main(String[] args) {
 
-        /*WeatherData myData = OpenWeatherAPI.callCityAPI("Sydney");
-        Vector<String> myVect = myData.dataDescription();
-        System.out.println(" ");
-        MediaWikiAPI.callSearchAPI("Dallas", 5);
-        System.out.println("Test");*/
         MyPircBot myBot = new MyPircBot();
-        /*System.out.println("My newest push");
-        System.out.println("Newer Push Test");
-        HttpClient myClient = HttpClient.newHttpClient();*/
+
     }
 }
