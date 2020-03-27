@@ -1,4 +1,4 @@
-//============================================================================
+//====================================================================================================================================================================
 // Name        : MediaWikiAPI.java
 // Author      : Jonathan Wachholz (JHW190002)
 // Course	   : UTDallas CS 2336.501 Spring
@@ -13,9 +13,9 @@
 //          The callPageSummaryAPI(int pageID, int numSentences) method will return a WikiPageInfo object with the first x
 //              amount of sentences from the given Wikipages introduction / summary.
 //
-//============================================================================
+//====================================================================================================================================================================
 //      The following information is just documentation on how the MediaWikiAPI works and ways to make the api calls
-//============================================================================
+//====================================================================================================================================================================
 //The pageid is the MediaWiki's internal article ID. You can use the action API's info property to get the full URL from pageid:
 //https://en.wikipedia.org/w/api.php?action=query&prop=info&pageids=18630637&inprop=url&format=json
 //
@@ -31,7 +31,7 @@
 //GETS FULL PAGE INFO/SUMMARY already parsed
 // :https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&pageids=909036&redirects=1&exsentences=6&exlimit=1&exintro=1&explaintext=1&exsectionformat=plain
 // :https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&titles=Elon_Musk&redirects=1&exsentences=6&exlimit=1&exintro=1&explaintext=1&exsectionformat=plain
-//============================================================================
+//====================================================================================================================================================================
 import java.util.Objects;
 import java.util.Vector;
 import org.json.JSONArray;

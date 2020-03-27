@@ -1,3 +1,26 @@
+//====================================================================================================================================================================
+// Name        : MyPircBotCommands.java
+// Author      : Jonathan Wachholz (JHW190002)
+// Course	   : UTDallas CS 2336.501 Spring
+// Version     : 1.0
+// Copyright   : March. 2020
+// Description :
+//          MyPircBotCommands is a listener class that extends from the PircBotX ListenerAdapter class which implements the base java Listener class.
+//              Currently, this class will check every message sent inside the channels the bot is apart of for Keywords to trigger
+//              the given bot commands.
+//
+//          The current commands are:
+//              !Help or !Commands - which displays the commands meant to be used by regular users, and thus will not show the ADMIN commands
+//              !Weather "search string" - will display the weather information for a given search term
+//              !Wiki search "search string" - will display the first 5 sentences from a given Wikipedia search strings summary page
+//
+//          The following are Admin commands that will not be shown by !Help / !Commands
+//              !ADMIN changech "channel name" - will cause the bot to join the new chat channel
+//              !ADMIN exit - will cause the bot to disconnect from the IRC entirely, leaving all channels
+//
+//====================================================================================================================================================================
+
+
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.ConnectEvent;
 import org.pircbotx.hooks.events.DisconnectEvent;
@@ -16,8 +39,8 @@ public class MyPircBotCommands extends ListenerAdapter {
         catch (NumberFormatException error){
             return false;
         }
-
     }
+
     public boolean isUS_State(String string){
         String[] US_States_Array = {
                 "AL", "Alabama", "Montana", "MT",
@@ -44,8 +67,8 @@ public class MyPircBotCommands extends ListenerAdapter {
                 "Michigan", "MI", "Washington", "WA",
                 "Minnesota", "MN", "WestVirginia", "WV",
                 "Mississippi", "MS", "Wisconsin", "WI",
-                "Missouri", "MO", "Wyoming", "WY"};
-
+                "Missouri", "MO", "Wyoming", "WY"
+        };
         for (String s : US_States_Array) {
             if (s.toLowerCase().equals(string.toLowerCase())) {
                 return true;
@@ -54,13 +77,8 @@ public class MyPircBotCommands extends ListenerAdapter {
         return false;
     }
 
-    public void onGenericMessage(GenericMessageEvent event){
-        /*System.out.printf("\n!!!!%s!!!!\n", event.toString());
-        System.out.printf("\n!!!!%s!!!!\n", event.getMessage());*/
-    }
+    public void onGenericMessage(GenericMessageEvent event){}
     public void onMessage(MessageEvent event){
-        /*System.out.printf("\n!!!!%s!!!!\n", event.getChannelSource());
-        System.out.printf("\n!!!!%s!!!!\n", event.getMessage());*/
         String msg = event.getMessage().trim();
 
         if (msg.startsWith("!Help") || msg.startsWith("!Commands")){
@@ -75,20 +93,13 @@ public class MyPircBotCommands extends ListenerAdapter {
             String[] args = adminMsg.split(" +");
             if (args[1].toLowerCase().equals("changech") && args.length >= 3){
                 String channelName2 = args[2];
-                event.respondWith("/join "+channelName2);
+                event.respondWith("Now joining the channel "+channelName2);
                 event.getBot().send().joinChannel(channelName2);
-                event.respondChannel("Test response");
-                //Not yet implemented
-                // Thought is to throw an exception back to main with the channel name, which would then reconnect the bot to a new channel
             }
-            else if(args[1].toLowerCase().equals("exitch")){
-                event.respondWith("Quitting because of command" +msg);
+            else if(args[1].toLowerCase().equals("exit")){
+                event.respondWith("Quitting because of command: " +msg);
                 event.getBot().send().quitServer();
             }
-
-
-
-
         }
         else if (msg.startsWith("!Wiki")){
             String wikiMsg = msg;
@@ -108,22 +119,13 @@ public class MyPircBotCommands extends ListenerAdapter {
                     }
                 }
                 else if (args.length == 3){
-
                     WikiPageInfo[] results = MediaWikiAPI.callSearchAPI(args[2], 1).toArray(new WikiPageInfo[0]);
-
                     for (int i = 0; i < results.length; i++){
                         event.respondWith(String.format("Result %d: %s\tURL: %s", i+1, results[i].getTitle(), results[i].getUrl()));
                         event.respondWith("\t"+results[i].getSummary());
                     }
                 }
-
-
-
-
             }
-
-
-
         }
         else if (msg.startsWith("!Weather")){
             String weatherMsg = msg;
@@ -131,14 +133,16 @@ public class MyPircBotCommands extends ListenerAdapter {
             if (weatherMsg.startsWith(" ")){
                 weatherMsg = weatherMsg.replaceFirst(" +", "");
             }
-
             Vector<Float> myLatLongCoords = MapQuestAPI.call_LatLongAPI(weatherMsg);
             WeatherData weatherData = OpenWeatherAPI.callLatLongAPI(myLatLongCoords.get(0), myLatLongCoords.get(1));
             weatherData.origSearchString = weatherMsg;
 
             printWeatherData(event, weatherData);
-
-            ////////////////////////////////////////////////////////////////////////////
+            //===========================================================================================================
+            // This code block is no longer needed as the bot now calls the MapQuest API which will parse our search term
+            //      more accurately than doing it ourselves...
+            //  Code is left here for future implementation of the OpenWeather API
+            //===========================================================================================================
             /*String weatherMsg = msg;
             weatherMsg = weatherMsg.replace(',', ' ');
             String[] args = weatherMsg.split(" +");
@@ -180,9 +184,8 @@ public class MyPircBotCommands extends ListenerAdapter {
             else{
                 event.respond("!Weather command not recognized...");
             }*/
-            ////////////////////////////////////////////////////////////////////////////////////////////
+            //===========================================================================================================
         }
-
     }
 
     private static void printWeatherData(MessageEvent event, WeatherData weatherData) {
@@ -190,11 +193,9 @@ public class MyPircBotCommands extends ListenerAdapter {
             event.respondWith("Open weather could not find the location you entered... (bad request error)");
         }
         else {
-
             Vector<String> stringData = weatherData.dataDescription();
             event.respondWith("Weather for: "+weatherData.origSearchString);
-            for (int i = 0; i < stringData.size(); i++) {
-                String stringDatum = stringData.get(i);
+            for (String stringDatum : stringData) {
                 event.respondWith(stringDatum);
             }
         }

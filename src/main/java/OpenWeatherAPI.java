@@ -1,4 +1,4 @@
-//============================================================================
+//====================================================================================================================================================================
 // Name        : OpenWeatherAPI.java
 // Author      : Jonathan Wachholz (JHW190002)
 // Course	   : UTDallas CS 2336.501 Spring
@@ -11,9 +11,9 @@
 //              where the MapQuest API will return Lat / Long data to then be used to more accurately call the
 //              OpenWeather API with that given Latitude / Longitude data
 //
-//============================================================================
+//====================================================================================================================================================================
 //      The following information is just documentation on how the OpenWeather API works and ways to make the api calls
-//============================================================================
+//====================================================================================================================================================================
 //https://openweathermap.org/current
 //api.openweathermap.org/data/2.5/weather?q={city name}&appid={your api key}
 //api.openweathermap.org/data/2.5/weather?q={city name},{state}&appid={your api key}
@@ -33,8 +33,7 @@
 //api.openweathermap.org/data/2.5/weather?zip={zip code},{country code}&appid={your api key}
 //Examples of API calls:
 //api.openweathermap.org/data/2.5/weather?zip=94040,us
-//============================================================================
-
+//====================================================================================================================================================================
 import org.json.JSONArray;
 import org.json.JSONObject;
 

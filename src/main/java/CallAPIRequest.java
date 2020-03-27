@@ -1,4 +1,4 @@
-//============================================================================
+//====================================================================================================================================================================
 // Name        : CallAPIRequest.java
 // Author      : Jonathan Wachholz (JHW190002)
 // Course	   : UTDallas CS 2336.501 Spring
@@ -13,7 +13,7 @@
 //                  that can be easily displayed in the System Console
 //              The toJSONobj method returns the API request info in a org.json.JSONObject format
 //                  to then be parsed separately by the other classes calling this method
-//============================================================================
+//====================================================================================================================================================================
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;

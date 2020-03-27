@@ -1,4 +1,4 @@
-//============================================================================
+//====================================================================================================================================================================
 // Name        : MapQuestAPI.java
 // Author      : Jonathan Wachholz (JHW190002)
 // Course	   : UTDallas CS 2336.501 Spring
@@ -9,16 +9,17 @@
 //          !Important to note, an invalid search term will always return the longitude / latitude data for Stockton Ohio
 //              Primarily uses the call_LatLongAPI(String searchString) method to call the MapQuest API with the given search string
 //                  And returns a vector with the Lat/Long data contained inside
-//============================================================================
-
+//====================================================================================================================================================================
+//
+// https://www.mapquestapi.com/geocoding/v1/address?key={KEY}&inFormat=kvp&outFormat=json&location={Denver%2C+CO}&thumbMaps=true&maxResults=1
+//
+//
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.Objects;
 import java.util.Vector;
 
-//https://www.mapquestapi.com/geocoding/v1/address?key={KEY}&inFormat=kvp&outFormat=json&location={Denver%2C+CO}&thumbMaps=true&maxResults=1
-//
-//
+
 public class MapQuestAPI {
     static String urlString;
 

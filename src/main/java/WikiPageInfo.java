@@ -1,10 +1,20 @@
+//====================================================================================================================================================================
+// Name        : WikiPageInfo.java
+// Author      : Jonathan Wachholz (JHW190002)
+// Course	   : UTDallas CS 2336.501 Spring
+// Version     : 1.0
+// Copyright   : March. 2020
+// Description :
+//   Container class that stores Info from a Wikipedia page
+//          Contains:
+//              The Page Title, the Page Summary (if added later), and the PageID which is then used to generate a shortened page URL
+//====================================================================================================================================================================
+
 public class WikiPageInfo {
     public String title, url, summary;
     public int pageID;
 
-    public WikiPageInfo(){
-
-    }
+    public WikiPageInfo(){}
 
     public WikiPageInfo(String title, int pageID) {
         this.title = title;
@@ -33,5 +43,8 @@ public class WikiPageInfo {
     public void setUrl(String url) { this.url = url; }
 
     public int getPageID() { return pageID; }
-    public void setPageID(int pageID) { this.pageID = pageID; }
+    public void setPageID(int pageID) {
+        this.pageID = pageID;
+        url = "http://en.wikipedia.org/?curid="+pageID;
+    }
 }

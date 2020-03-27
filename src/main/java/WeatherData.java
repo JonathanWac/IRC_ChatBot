@@ -1,5 +1,22 @@
-import com.google.common.base.MoreObjects;
+//====================================================================================================================================================================
+// Name        : WeatherData.java
+// Author      : Jonathan Wachholz (JHW190002)
+// Course	   : UTDallas CS 2336.501 Spring
+// Version     : 1.0
+// Copyright   : March. 2020
+// Description :
+//   Container class that stores Weather Data
+//          dataDescription() method returns the relevant Weather Data info in a Vector<String> format so that it can
+//              easily be displayed by the PircBot in a readable format (https://webchat.freenode.net/ does not allow \n characters in their messages)
+//
+//          displayWeather() method returns the relevant Weather Data info in a String format
+//
+//
+//          Other important information is that the weatherCategory String is used to determine if there is any precipitation info
+//              relevant to be displayed / stored in the weather data, based on the OpenWeather API information stored inside
+//====================================================================================================================================================================
 
+import com.google.common.base.MoreObjects;
 import java.util.Vector;
 
 public class WeatherData {
@@ -8,7 +25,7 @@ public class WeatherData {
     public float rainMM1h, rainMM3h, snowMM1h, snowMM3h, avgTemp, tempFeels, temp_min, temp_max;
 
     public static int instCount = 0;
-    
+
     WeatherData(){
         instCount++;
     }
@@ -19,19 +36,8 @@ public class WeatherData {
 
         formatStr = String.format("\tData from: %s, %s", locationName, countryName);
         myData.add(formatStr);
-
         formatStr = String.format("\tTemp - Avg %.2f\u2109, High %.2f\u2109, Low %.2f\u2109, Feels Like %.2f\u2109,", avgTemp, temp_max, temp_min, tempFeels);
         myData.add(formatStr);
-        /*formatStr = String.format("\tAvg Temp %.2f\u2109", avgTemp);
-        myData.add(formatStr);
-        formatStr = String.format("\tTemp Max %.2f\u2109", temp_max);
-        myData.add(formatStr);
-        formatStr = String.format("\tTemp Min %.2f\u2109", temp_min);
-        myData.add(formatStr);
-        formatStr = String.format("\tFeels like %.2f\u2109", temp_min);
-        myData.add(formatStr);
-        formatStr = String.format("\t\tDescription: %s", weatherDesc);
-        myData.add(formatStr);*/
 
         if (weatherCategory.equals("Rain") || weatherCategory.equals("Drizzle") || weatherCategory.equals("Thunderstorm")){
             formatStr = String.format("\tDescription: %s\tHourly Rain %.2fmm\tCloud coverage %d%%", weatherDesc, rainMM1h, percentClouds);
