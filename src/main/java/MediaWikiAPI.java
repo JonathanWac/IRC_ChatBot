@@ -1,6 +1,24 @@
+//====================================================================================================================================================================
+// Name        : MediaWikiAPI.java
+// Author      : Jonathan Wachholz (JHW190002)
+// Course	   : UTDallas CS 2336.501 Spring
+// Version     : 1.0
+// Copyright   : March. 2020
+// Description :
+//   Static class that calls the english wikipedia.org api to get information about a search
+//          The callSearchAPI(String searchString, int searchLimit) method makes a search query for the given search string on
+//              the wikipedia server. The search limit is the amount of search queries to return, so
+//              callSearchAPI("Java", 5) would return a WikiPageInfo Vector with the first 5 search results for "Java"
+//
+//          The callPageSummaryAPI(int pageID, int numSentences) method will return a WikiPageInfo object with the first x
+//              amount of sentences from the given Wikipages introduction / summary.
+//
+//====================================================================================================================================================================
+//      The following information is just documentation on how the MediaWikiAPI works and ways to make the api calls
+//====================================================================================================================================================================
 //The pageid is the MediaWiki's internal article ID. You can use the action API's info property to get the full URL from pageid:
 //https://en.wikipedia.org/w/api.php?action=query&prop=info&pageids=18630637&inprop=url&format=json
-
+//
 //You can just use a URL like this:
 //http://en.wikipedia.org/?curid=18630637
 //http://en.wikipedia.org/wiki?curid=18630637
@@ -9,20 +27,16 @@
 //Note that MediaWiki ignores the page title if you specify a curid, so even
 //http://en.wikipedia.org/wiki/FooBar?curid=18630637
 //leads to the same page
-
-//Oh, and you can also get the full page URL in your initial API call if you add "&prop=info&inprop=url":
-//http://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=meaning&srprop=size%7Cwordcount%7Ctimestamp%7Csnippet&prop=info&inprop=url
-
+//
 //GETS FULL PAGE INFO/SUMMARY already parsed
 // :https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&pageids=909036&redirects=1&exsentences=6&exlimit=1&exintro=1&explaintext=1&exsectionformat=plain
 // :https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&titles=Elon_Musk&redirects=1&exsentences=6&exlimit=1&exintro=1&explaintext=1&exsectionformat=plain
+//====================================================================================================================================================================
 import java.util.Objects;
 import java.util.Vector;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-//Testing calls
-//https://en.wikipedia.org/wiki/Special:ApiSandbox#action=query&format=json&list=search&srsearch=Java
 public class MediaWikiAPI {
     static String  urlString;
 
@@ -40,7 +54,6 @@ public class MediaWikiAPI {
             wikiPageInfo.setPageID(0);
             wikiPageInfo.setSummary("No results found");
             wikiPageInfo.setUrl("N/a");
-
             wikiPages.add(wikiPageInfo);
             return wikiPages;
         }
@@ -56,7 +69,6 @@ public class MediaWikiAPI {
                 /*wikiPages.add(new WikiPageInfo(jsonArray.getJSONObject(i).getString("title"), jsonArray.getJSONObject(i).getInt("pageid")));*/
             }
         }
-
         return wikiPages;
     }
     public static WikiPageInfo callPageSummaryAPI(int pageID, int numSentences) {
@@ -65,13 +77,11 @@ public class MediaWikiAPI {
     }
     private static WikiPageInfo parseWikiPageSummary(JSONObject jsonObj, int pageID) {
         WikiPageInfo pageInfo = new WikiPageInfo();
-
         try{
             pageInfo.setSummary(jsonObj.getJSONObject("query").getJSONObject("pages").getJSONObject(Integer.toString(pageID)).getString("extract"));
         }catch (Exception e){
             pageInfo.setSummary("Could not retrieve page summary...");
         }
-
         return pageInfo;
     }
 
